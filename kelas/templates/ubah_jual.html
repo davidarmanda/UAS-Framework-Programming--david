@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block isinya %}
+
+<div class="container">
+    <div class="row">
+        <div-class="col-md-2">
+            {% for message in messages %}
+                {% if message %}
+                    <div class="alert alert-success">{{message}}</div>
+                {% endif %}
+            {% endfor %}
+            <h1>Ubah : {{ datapenjualans.produk }}</h1>
+            <form action="{% url 'ubah_jual' datapenjualans.id %}"method="post">
+                {% csrf_token %}
+            {{form.as_p}}
+            <button type="submit" class="btn btn-primary">Simpan</button>
+            <a href="/datapenjualan" class="btn btn-primary">Kembali</a>
+        </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

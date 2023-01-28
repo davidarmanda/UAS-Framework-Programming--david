@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block isinya %}
+
+<div class="container">
+ <h1 class="align-center">Data Base Penjualan</h1>
+ <p><a href="/regjual" class="btn btn-primary">Tambah Barang</a></p>
+    {% for message in messages %}
+    {% if message %}
+    <div class="alert alert-success">{{message}}</div>
+    {% endif %}
+    {% endfor %}
+ <table border="1" class="table table-success table-striped">
+    <tr>
+        <th>Nomer</th>
+        <th>Produk</th>
+        <th>Kategori</th>
+        <th>Merek</th>
+        <th>Total Unit</th>
+        <th>Total Penjualan</th>
+        <th>Aksi</th>
+    </tr>
+    {% for Datapenjualan in datapenjualan %}
+    <tr>
+        <td>{{Datapenjualan.no}}</td>
+        <td><a href="{% url 'ubah_jual' Datapenjualan.id %}">{{Datapenjualan.produk}}</a></td>
+        <td>{{Datapenjualan.kategori}}</td>
+        <td>{{Datapenjualan.merk}}</td>
+        <td>{{Datapenjualan.totalunit}}</td>
+        <td>{{Datapenjualan.totalpenjualan}}</td>
+        <td><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#hapus-{{ Datapenjualan.id }}">
+            Hapus
+        </button></td>
+    <!-- Modal -->
+    <div class="modal fade" id="hapus-{{ Datapenjualan.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Yakin Akan Di Hapus ?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Nama Produk : {{ Datapenjualan.produk }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <a href="{% url 'hapus_jual' Datapenjualan.id %}" class="btn btn-danger">Yakin</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    </tr>
+    {% endfor %}
+ </table>
+</div>
+ {% endblock %}

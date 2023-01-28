@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block isinya %}
+
+<div class="container">
+    <h1 class="align-center">Daftar Barang</h1>
+    <p><a href="/registrasibrg" class="btn btn-primary">Tambah Barang</a></p>
+    {% for message in messages %}
+    {% if message %}
+    <div class="alert alert-success">{{message}}</div>
+    {% endif %}
+    {% endfor %}
+    <table border="1" class="table table-success table-striped">
+        <thead class="table-yellow">
+            <tr>
+                <th>Kode Barang</th>
+                <th>Nama</th>
+                <th>Stok</th>
+                <th>Harga</th>
+                <th>Link Gambar</th>
+                <th>Jenis</th>
+                <th>Aksi</th>
+
+            </tr>
+        </thead>
+        {% for Barang in barang %}
+        <tr>
+            <td><a href="{% url 'ubah_brg' Barang.id %}">{{Barang.kodebrg}}</a></td>
+            <td>{{Barang.nama}}</td>
+            <td>{{Barang.stok}}</td>
+            <td>{{Barang.harga}}</td>
+            <td>{{Barang.link_gbr}}</td>
+            <td>{{Barang.jenis_id.nama}}</td>
+            <td><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#hapus-{{ Barang.id }}">
+                    Hapus
+                </button></td>
+            <!-- Modal -->
+            <div class="modal fade" id="hapus-{{ Barang.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Yakin Akan Di Hapus ?</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Nama Barang : {{ Barang.nama }}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                            <a href="{% url 'hapus_brg' Barang.id %}" class="btn btn-danger">Yakin</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}
